@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amir — ML Research Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E13;
+    --bg-panel:#10151C;
+    --bg-elev:#161D26;
+    --grid-line:rgba(233,239,245,0.045);
+    --text:#E9EEF3;
+    --text-dim:#93A0AF;
+    --text-faint:#5B6672;
+    --time:#E8654F;   /* R — time domain */
+    --freq:#49B58A;   /* G — frequency domain */
+    --tf:#5B9BE6;     /* B — time-frequency domain */
+    --accent:#49B58A;
+    --border:rgba(233,239,245,0.09);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,19,0.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:18px 24px;}
+  .brand{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.02em; color:var(--text);}
+  .brand span{color:var(--freq);}
+  .navlinks{display:flex; gap:22px; flex-wrap:wrap;}
+  .navlinks a{color:var(--text-dim); text-decoration:none; font-size:13px; font-family:'JetBrains Mono',monospace; letter-spacing:0.03em; transition:color .2s;}
+  .navlinks a:hover{color:var(--freq);}
+
+  /* HERO */
+  header.hero{padding:96px 0 64px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em;
+    color:var(--text-faint); text-transform:uppercase; margin-bottom:18px;
+  }
+  h1{font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.15; max-width:680px; letter-spacing:-0.01em;}
+  h1 .role{color:var(--text-dim); font-weight:400;}
+  .hero-desc{color:var(--text-dim); max-width:560px; margin-top:20px; font-size:16px;}
+
+  /* SIGNATURE SIGNAL VISUAL */
+  .signal-box{
+    margin-top:48px; border:1px solid var(--border); background:var(--bg-panel);
+    border-radius:8px; padding:20px 20px 14px; overflow:hidden;
+  }
+  .signal-stage{position:relative; height:130px;}
+  .signal-stage svg{position:absolute; inset:0; width:100%; height:100%;}
+  .layer-time  { animation: cycleTime 9s ease-in-out infinite; }
+  .layer-freq  { animation: cycleFreq 9s ease-in-out infinite; }
+  .layer-tf    { animation: cycleTF 9s ease-in-out infinite; }
+  @keyframes cycleTime { 0%,4%{opacity:1;} 30%,100%{opacity:0;} }
+  @keyframes cycleFreq { 0%,30%{opacity:0;} 34%,63%{opacity:1;} 67%,100%{opacity:0;} }
+  @keyframes cycleTF   { 0%,64%{opacity:0;} 68%,96%{opacity:1;} 100%{opacity:0;} }
+
+  .signal-labels{display:flex; gap:24px; margin-top:14px; padding-top:14px; border-top:1px solid var(--border);}
+  .signal-labels span{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    color:var(--text-faint); transition:color .3s;
+  }
+  .lbl-time{ animation: lblTime 9s ease-in-out infinite; }
+  .lbl-freq{ animation: lblFreq 9s ease-in-out infinite; }
+  .lbl-tf{ animation: lblTF 9s ease-in-out infinite; }
+  @keyframes lblTime { 0%,4%{color:var(--time);} 30%,100%{color:var(--text-faint);} }
+  @keyframes lblFreq { 0%,30%{color:var(--text-faint);} 34%,63%{color:var(--freq);} 67%,100%{color:var(--text-faint);} }
+  @keyframes lblTF   { 0%,64%{color:var(--text-faint);} 68%,96%{color:var(--tf);} 100%{color:var(--text-faint);} }
+  .signal-caption{font-size:12px; color:var(--text-faint); margin-top:10px; font-family:'JetBrains Mono',monospace;}
+
+  /* SECTIONS */
+  section{padding:64px 0;}
+  section h2{
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--text-faint); margin-bottom:32px;
+    display:flex; align-items:center; gap:14px;
+  }
+  section h2::after{content:""; flex:1; height:1px; background:var(--border);}
+
+  /* PROJECT CARDS */
+  .projects{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+  .card{
+    border:1px solid var(--border); background:var(--bg-panel); border-radius:8px;
+    padding:22px; transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px); border-color:var(--card-accent, var(--freq));}
+  .tag{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    letter-spacing:0.06em; text-transform:uppercase; padding:3px 8px; border-radius:4px;
+    border:1px solid var(--card-accent, var(--freq)); color:var(--card-accent, var(--freq));
+    margin-bottom:14px;
+  }
+  .card h3{font-size:17px; font-weight:600; margin-bottom:8px;}
+  .card p{font-size:14px; color:var(--text-dim); margin-bottom:14px;}
+  .stack{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); margin-bottom:14px;}
+  .card a.view{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text);
+    text-decoration:none; border-bottom:1px solid var(--card-accent, var(--freq)); padding-bottom:2px;
+  }
+  .card a.view:hover{color:var(--card-accent, var(--freq));}
+
+  /* SKILLS */
+  .skills{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:22px;}
+  .skill-group h4{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--freq); letter-spacing:0.06em; margin-bottom:10px;}
+  .skill-group ul{list-style:none;}
+  .skill-group li{font-size:13.5px; color:var(--text-dim); padding:3px 0;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border); padding:48px 0; margin-top:32px;}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px; align-items:center;}
+  footer a{color:var(--text-dim); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; margin-right:18px;}
+  footer a:hover{color:var(--freq);}
+  footer .copy{color:var(--text-faint); font-size:12px; font-family:'JetBrains Mono',monospace;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .layer-time{opacity:1;} .layer-freq{opacity:0;} .layer-tf{opacity:0;}
+    .lbl-time{color:var(--time) !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">amir<span>.</span>research</div>
+    <div class="navlinks">
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/" target="_blank"><!-- TODO: your GitHub --> GitHub</a>
+      <a href="https://linkedin.com/" target="_blank"><!-- TODO: your LinkedIn --> LinkedIn</a>
+      <a href="mailto:you@example.com"><!-- TODO: your email --> Email</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">signal processing × deep learning</div>
+    <h1>Amir<br><span class="role">Graduate Researcher — Rotating Machinery Fault Diagnosis</span></h1>
+    <p class="hero-desc">
+      I work on deep learning and transfer learning for vibration-based fault diagnosis,
+      turning raw sensor signals into structured representations across the time, frequency,
+      and time-frequency domains — and building the models, federated systems, and pipelines
+      that learn from them.
+    </p>
+
+    <div class="signal-box">
+      <div class="signal-stage">
+        <svg class="layer-time" viewBox="0 0 400 130" fill="none">
+          <path d="M0,65 Q25,15 50,65 T100,65 T150,65 T200,65 T250,65 T300,65 T350,65 T400,65"
+                stroke="var(--time)" stroke-width="2.5"/>
+        </svg>
+        <svg class="layer-freq" viewBox="0 0 400 130" fill="none">
+          <g fill="var(--freq)">
+            <rect x="10"  y="70" width="18" height="45"/>
+            <rect x="42"  y="40" width="18" height="75"/>
+            <rect x="74"  y="85" width="18" height="30"/>
+            <rect x="106" y="20" width="18" height="95"/>
+            <rect x="138" y="55" width="18" height="60"/>
+            <rect x="170" y="30" width="18" height="85"/>
+            <rect x="202" y="75" width="18" height="40"/>
+            <rect x="234" y="10" width="18" height="105"/>
+            <rect x="266" y="60" width="18" height="55"/>
+            <rect x="298" y="45" width="18" height="70"/>
+            <rect x="330" y="90" width="18" height="25"/>
+            <rect x="362" y="35" width="18" height="80"/>
+          </g>
+        </svg>
+        <svg class="layer-tf" viewBox="0 0 400 130" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="tfGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#101826"/>
+              <stop offset="35%" stop-color="var(--tf)" stop-opacity="0.55"/>
+              <stop offset="55%" stop-color="var(--freq)" stop-opacity="0.5"/>
+              <stop offset="80%" stop-color="var(--tf)" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#101826"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="10" width="400" height="110" fill="url(#tfGrad)"/>
+          <rect x="0" y="10" width="400" height="110" fill="none" stroke="var(--border)"/>
+        </svg>
+      </div>
+      <div class="signal-labels">
+        <span class="lbl-time">TIME DOMAIN</span>
+        <span class="lbl-freq">FREQUENCY DOMAIN</span>
+        <span class="lbl-tf">TIME-FREQUENCY DOMAIN</span>
+      </div>
+      <div class="signal-caption">// same signal, three representations — R · G · B</div>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <div class="projects">
+
+      <div class="card" style="--card-accent:var(--tf)">
+        <span class="tag">Fault Diagnosis</span>
+        <h3>Vibration Signal Fault Diagnosis (Thesis)</h3>
+        <p>Converts vibration time-series into three-channel RGB images (time / frequency / time-frequency)
+        and classifies them with ConvNeXtV2 and a custom Multi-Domain Channel Attention module,
+        transferring from CWRU bearing data to industrial MECHO data.</p>
+        <div class="stack">PyTorch · ConvNeXtV2 · CWT/STFT · Transfer Learning</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+      <div class="card" style="--card-accent:var(--freq)">
+        <span class="tag">Federated Learning</span>
+        <h3>FedTok-LLM</h3>
+        <p>Federated learning architecture pairing dual-branch Mamba SSM encoders on each client
+        with a frozen central LLM (Qwen2.5), using cross-modal attention and contrastive
+        alignment for distributed fault detection.</p>
+        <div class="stack">Federated Learning · Mamba SSM · LLM · Contrastive Learning</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+      <div class="card" style="--card-accent:var(--time)">
+        <span class="tag">Self-Supervised</span>
+        <h3>SSL Fault Classification Pipeline</h3>
+        <p>Self-supervised pretraining (SimCLR) with pseudo-label self-training, prototype
+        alignment, and EMA averaging, evaluated across six signal-channel combinations for
+        a full ablation study.</p>
+        <div class="stack">SimCLR · Self-Training · Ablation Study</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+      <div class="card" style="--card-accent:var(--freq)">
+        <span class="tag">Federated Learning</span>
+        <h3>Federated Transfer Learning (FTL) Framework</h3>
+        <p>Combines FedBN, FedProx, personalized client heads, and MMD-based domain alignment
+        to bridge the domain gap between CWRU and MECHO datasets across distributed clients.</p>
+        <div class="stack">FedBN · FedProx · MMD · Domain Adaptation</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+      <div class="card" style="--card-accent:var(--tf)">
+        <span class="tag">NLP · Finance</span>
+        <h3>Persian Gold Price Forecasting</h3>
+        <p>Fine-tuned Qwen2.5-7B and Fin-R1 for multi-horizon (T1/T7/T14) Iranian gold price
+        prediction, combining OHLC data with Ichimoku and Fibonacci technical indicators.</p>
+        <div class="stack">Qwen2.5 · LoRA · Time-Series · Persian NLP</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+      <div class="card" style="--card-accent:var(--time)">
+        <span class="tag">Data Engineering</span>
+        <h3>News & Market Scraping Pipelines</h3>
+        <p>Scrapy-based crawlers for Persian and financial news sources, with Jalali calendar
+        handling, date-range and category filtering, and GDELT/Wayback API integration for
+        gold-market news aggregation.</p>
+        <div class="stack">Scrapy · Pandas · GDELT · Wayback CDX</div>
+        <a class="view" href="#"><!-- TODO: link to repo --> View Project →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Research Focus</h2>
+    <div class="skills">
+      <div class="skill-group">
+        <h4>DEEP LEARNING</h4>
+        <ul><li>ConvNeXtV2 / CNNs</li><li>Transfer Learning</li><li>Self-Supervised Learning</li></ul>
+      </div>
+      <div class="skill-group">
+        <h4>SIGNAL PROCESSING</h4>
+        <ul><li>CWT / STFT</li><li>Time-Frequency Analysis</li><li>Vibration Analysis</li></ul>
+      </div>
+      <div class="skill-group">
+        <h4>DISTRIBUTED / LLM</h4>
+        <ul><li>Federated Learning</li><li>Mamba SSM</li><li>LoRA Fine-Tuning</li></ul>
+      </div>
+      <div class="skill-group">
+        <h4>TOOLS</h4>
+        <ul><li>PyTorch</li><li>Scrapy</li><li>Colab / Kaggle</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      <a href="https://scholar.google.com/" target="_blank">Scholar</a>
+      <a href="mailto:you@example.com">Email</a>
+    </div>
+    <div class="copy">© 2026 Amir — built with signal.</div>
+  </div>
+</footer>
+
+</body>
+</html>
