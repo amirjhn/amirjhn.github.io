@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amir Jahangard Takaloo — AI & Electrical Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E13;
+    --bg-panel:#10151C;
+    --bg-elev:#161D26;
+    --grid-line:rgba(233,239,245,0.045);
+    --text:#E9EEF3;
+    --text-dim:#93A0AF;
+    --text-faint:#5B6672;
+    --time:#E8654F;
+    --freq:#49B58A;
+    --tf:#5B9BE6;
+    --accent:#49B58A;
+    --border:rgba(233,239,245,0.09);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; line-height:1.6;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(10,14,19,0.88); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; flex-wrap:wrap; gap:10px;}
+  .brand{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px;}
+  .brand span{color:var(--freq);}
+  .navlinks{display:flex; gap:16px; flex-wrap:wrap;}
+  .navlinks a{color:var(--text-dim); text-decoration:none; font-size:12.5px; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em; transition:color .2s;}
+  .navlinks a:hover{color:var(--freq);}
+
+  header.hero{padding:80px 0 48px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--text-faint); text-transform:uppercase; margin-bottom:16px;}
+  h1{font-size:clamp(30px,4.6vw,44px); font-weight:600; line-height:1.15; letter-spacing:-0.01em;}
+  .roles{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .role-pill{font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.04em; padding:5px 12px; border:1px solid var(--freq); color:var(--freq); border-radius:20px;}
+  .contact-line{margin-top:18px; display:flex; gap:18px; flex-wrap:wrap;}
+  .contact-line a, .contact-line span{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-dim);}
+  .contact-line a{text-decoration:none; border-bottom:1px solid transparent;}
+  .contact-line a:hover{color:var(--freq); border-bottom-color:var(--freq);}
+
+  section{padding:52px 0;}
+  section h2{font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:28px; display:flex; align-items:center; gap:14px;}
+  section h2::after{content:""; flex:1; height:1px; background:var(--border);}
+
+  .bio p{color:var(--text-dim); font-size:15.5px; max-width:680px;}
+
+  .edu-item, .exp-item{border-left:2px solid var(--border); padding:2px 0 26px 20px; position:relative;}
+  .edu-item::before, .exp-item::before{content:""; position:absolute; left:-6px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--bg); border:2px solid var(--freq);}
+  .edu-item:last-child, .exp-item:last-child{padding-bottom:0;}
+  .item-date{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--freq); letter-spacing:0.04em; margin-bottom:6px;}
+  .item-title{font-size:16px; font-weight:600; margin-bottom:4px;}
+  .item-sub{font-size:13.5px; color:var(--text-faint); margin-bottom:8px;}
+  .item-detail{font-size:14px; color:var(--text-dim); margin-bottom:4px;}
+  .item-detail ul{margin:6px 0 0 18px;}
+  .item-detail li{margin-bottom:4px;}
+
+  .skills{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:22px;}
+  .skill-group h4{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--freq); letter-spacing:0.06em; margin-bottom:8px;}
+  .skill-group p{font-size:13.5px; color:var(--text-dim);}
+
+  .pub-item{border:1px solid var(--border); background:var(--bg-panel); border-radius:8px; padding:18px 20px; margin-bottom:14px;}
+  .pub-item p{font-size:14px; color:var(--text-dim);}
+  .pub-item .pub-authors{color:var(--text); font-weight:500;}
+  .pub-item .pub-venue{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); margin-top:6px;}
+  .pub-item a{color:var(--tf); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .pub-item a:hover{text-decoration:underline;}
+
+  .lang-row{display:flex; gap:28px; flex-wrap:wrap;}
+  .lang-item{border:1px solid var(--border); background:var(--bg-panel); border-radius:8px; padding:16px 20px; min-width:180px;}
+  .lang-item .lname{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--freq); margin-bottom:4px;}
+  .lang-item .ldetail{font-size:13px; color:var(--text-dim);}
+
+  .projects{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+  .card{border:1px solid var(--border); background:var(--bg-panel); border-radius:8px; padding:0 0 20px; overflow:hidden; transition:transform .2s, border-color .2s;}
+  .card:hover{transform:translateY(-3px); border-color:var(--card-accent, var(--freq));}
+  .img-placeholder{
+    height:150px; display:flex; align-items:center; justify-content:center; text-align:center;
+    background:repeating-linear-gradient(45deg, var(--bg-elev), var(--bg-elev) 10px, var(--bg-panel) 10px, var(--bg-panel) 20px);
+    border-bottom:1px dashed var(--border); color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:10px;
+  }
+  .card-body{padding:20px 22px 0;}
+  .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; padding:3px 8px; border-radius:4px; border:1px solid var(--card-accent, var(--freq)); color:var(--card-accent, var(--freq)); margin-bottom:12px;}
+  .card h3{font-size:16px; font-weight:600; margin-bottom:8px;}
+  .card ul{margin:0 0 0 18px; font-size:13.5px; color:var(--text-dim);}
+  .card li{margin-bottom:4px;}
+
+  footer{border-top:1px solid var(--border); padding:40px 0; margin-top:20px;}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; align-items:center;}
+  footer a{color:var(--text-dim); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; margin-right:16px;}
+  footer a:hover{color:var(--freq);}
+  footer .copy{color:var(--text-faint); font-size:12px; font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">amir<span>.</span>jahangard</div>
+    <div class="navlinks">
+      <a href="#biography">Bio</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#publications">Publications</a>
+      <a href="#languages">Languages</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Tehran, Iran</div>
+    <h1>Amir Jahangard Takaloo</h1>
+    <div class="roles">
+      <span class="role-pill">AI Engineer</span>
+      <span class="role-pill">Electrical Engineer</span>
+    </div>
+    <div class="contact-line">
+      <a href="https://linkedin.com/in/amirjhn" target="_blank">linkedin.com/in/amirjhn</a>
+      <a href="mailto:amir.jahan.tak.81@gmail.com">amir.jahan.tak.81@gmail.com</a>
+      <a href="https://github.com/amirjhn" target="_blank">github.com/amirjhn</a>
+    </div>
+  </div>
+</header>
+
+<section id="biography">
+  <div class="wrap bio">
+    <h2>Biography</h2>
+    <p>
+      I'm an M.Sc. student in Electrical Engineering (Control) at K.N. Toosi University of Technology,
+      working toward my thesis on explainable transfer learning for fault diagnosis of rotating machinery
+      using RGB-encoded vibration signals, under the supervision of Dr. Mahdi Aliyari-Shoorehdeli. As a
+      research assistant at the Fault Detection and Identification (FDI) laboratory, I work with real-world
+      industrial datasets and co-author journal papers on machine and deep learning applied to structural
+      health monitoring, fault diagnosis, and time-series analysis. My broader interests span federated
+      learning, explainable AI, transfer learning, large language models, and vision-language models, and
+      I also serve as a teaching assistant for Machine Learning and Principles of Artificial Intelligence.
+    </p>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <h2>Education</h2>
+
+    <div class="edu-item">
+      <div class="item-date">2024 — PRESENT (EXPECTED AUGUST 2026)</div>
+      <div class="item-title">M.Sc. in Electrical Engineering (Control)</div>
+      <div class="item-sub">K.N. Toosi University of Technology · GPA: 18.92/20 (4.0/4.0)</div>
+      <div class="item-detail">
+        Thesis: "Explainable Transfer Learning for Fault Diagnosis of Rotating Machinery Using RGB Image of Vibration Signals."<br>
+        Supervisor: Dr. Mahdi Aliyari-Shoorehdeli
+      </div>
+    </div>
+
+    <div class="edu-item">
+      <div class="item-date">2020 — 2024</div>
+      <div class="item-title">B.Sc. in Electrical Engineering (Control)</div>
+      <div class="item-sub">K.N. Toosi University of Technology · GPA: 18.14/20 (3.92/4.0)</div>
+      <div class="item-detail">
+        Thesis: "Classification of Car Accident Types Using Acceleration Data and Machine Learning Methods."<br>
+        Supervisor: Dr. Mahdi Aliyari-Shoorehdeli
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill-group"><h4>PROGRAMMING</h4><p>Python, OOP, MATLAB, C/C++</p></div>
+      <div class="skill-group"><h4>ML / DL</h4><p>CNNs, GANs, VAEs, Transformers, RL, YOLO, Federated Learning, XAI</p></div>
+      <div class="skill-group"><h4>LLMs & VLMs</h4><p>Hugging Face, PEFT (LoRA, QLoRA, Prompt Tuning), RLHF (PPO, DPO, GRPO), RAG Pipelines, Vision-Language Models</p></div>
+      <div class="skill-group"><h4>AUTOMATION & AI AGENTS</h4><p>N8N, Prompt Engineering, MCP, LangChain, Embeddings</p></div>
+      <div class="skill-group"><h4>FRAMEWORKS & LIBRARIES</h4><p>PyTorch, TensorFlow, Scikit-learn, OpenCV</p></div>
+      <div class="skill-group"><h4>DATA & TOOLS</h4><p>Pandas, NumPy, Matplotlib, FAISS, Git, Docker, Google Colab, Kaggle</p></div>
+      <div class="skill-group"><h4>SOFTWARE</h4><p>Microsoft Office, LaTeX, EndNote, Zotero, Linux</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <h2>Publications</h2>
+
+    <div class="pub-item">
+      <p><span class="pub-authors">Amir Jahangard Takaloo</span>, M. A. Shoorehdeli, and E. Mohammadi. "XMDCA-TL: An Explainable Multi-Domain Channel Attention Transfer Learning Framework for Fault Diagnosis in Industrial Gas Turbines."</p>
+      <div class="pub-venue">2026 · Submitted to Applied Soft Computing (under review) · <a href="https://doi.org/10.48550/arXiv.2606.21991" target="_blank">arXiv:2606.21991</a></div>
+    </div>
+
+    <div class="pub-item">
+      <p><span class="pub-authors">Amir Jahangard Takaloo</span> and M. A. Shoorehdeli. "Classifying Car Crash Types to Enhance Airbag Performance: A Machine Learning Approach."</p>
+      <div class="pub-venue">12th International Conference on Robotics and Mechatronics (ICRoM), IEEE, 2024 · <a href="https://doi.org/10.1109/ICRoM64545.2024.10903588" target="_blank">DOI: 10.1109/ICRoM64545.2024.10903588</a></div>
+    </div>
+
+    <div class="pub-item">
+      <p>M. Behboudi, <span class="pub-authors">Amir Jahangard Takaloo</span>, M. A. Shoorehdeli, and M. M. Seyfi. "Time-Series Similarity Analysis of Field Crash Acceleration Signals with Synthetic Data Generation for Crash-Type Classification."</p>
+      <div class="pub-venue">2026 · Submitted to Accident Analysis &amp; Prevention (under review)</div>
+    </div>
+
+    <div class="pub-item">
+      <p>A. Taherinia, <span class="pub-authors">Amir Jahangard Takaloo</span>, M. Tavakoli, and T. Amraee. "Efficient Intrusion Detection in Smart Grids via Kolmogorov-Arnold-Based Neural Architectures."</p>
+      <div class="pub-venue">2026 · <a href="http://dx.doi.org/10.2139/ssrn.6736899" target="_blank">Available at SSRN</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="languages">
+  <div class="wrap">
+    <h2>Languages</h2>
+    <div class="lang-row">
+      <div class="lang-item">
+        <div class="lname">ENGLISH</div>
+        <div class="ldetail">IELTS: Band 7.5 (L: 8, R: 7.5, W: 6.5, S: 7)</div>
+      </div>
+      <div class="lang-item">
+        <div class="lname">PERSIAN</div>
+        <div class="ldetail">Native</div>
+      </div>
+      <div class="lang-item">
+        <div class="lname">TURKISH</div>
+        <div class="ldetail">Fluent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Selected Projects</h2>
+    <div class="projects">
+
+      <div class="card" style="--card-accent:var(--tf)">
+        <div class="img-placeholder"><!-- TODO: replace with an &lt;img src="images/yourfile.jpg"&gt; --> Add project image</div>
+        <div class="card-body">
+          <span class="tag">Fault Diagnosis</span>
+          <h3>Explainable Transfer Learning for Rotating Machinery Fault Diagnosis</h3>
+          <ul>
+            <li>Deep transfer learning models using RGB-transformed vibration signals for machinery fault classification</li>
+            <li>Federated learning framework in PyTorch for privacy-preserving multi-client training</li>
+            <li>Grad-CAM and SHAP explainability to interpret model decisions</li>
+            <li>Significant cross-domain diagnostic accuracy improvement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-accent:var(--time)">
+        <div class="img-placeholder">Add project image</div>
+        <div class="card-body">
+          <span class="tag">Signal Processing</span>
+          <h3>Accident Prediction & Crash Type Classification for Airbag Optimization</h3>
+          <ul>
+            <li>ML and signal processing on real-world acceleration data to classify crash types</li>
+            <li>ML-based prediction models to enhance airbag deployment timing and safety</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-accent:var(--freq)">
+        <div class="img-placeholder">Add project image</div>
+        <div class="card-body">
+          <span class="tag">Computer Vision</span>
+          <h3>Gesture Recognition for Smart TVs</h3>
+          <ul>
+            <li>CNN and MediaPipe-based model detecting 5 hand gestures with 94% accuracy</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-accent:var(--tf)">
+        <div class="img-placeholder">Add project image</div>
+        <div class="card-body">
+          <span class="tag">Computer Vision</span>
+          <h3>Melanoma & Skin Lesion Classification</h3>
+          <ul>
+            <li>Custom CNN achieving 92% classification accuracy on multi-class skin lesions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-accent:var(--freq)">
+        <div class="img-placeholder">Add project image</div>
+        <div class="card-body">
+          <span class="tag">LLMs</span>
+          <h3>Large Language Models — Selected Projects</h3>
+          <ul>
+            <li>Fine-tuned and evaluated Gemma, Llama, FLAN-T5, GPT, Bloom, Qwen, and BERT-fa via Hugging Face + PEFT</li>
+            <li>LoRA, QLoRA, and Prompt Tuning with 4-bit quantization</li>
+            <li>News summarization (CNN/DailyMail, ROUGE) and Persian NER with BERT-fa + LoRA</li>
+            <li>RLHF (PPO, DPO, GRPO) and RAG-based QA systems with LangChain</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="--card-accent:var(--time)">
+        <div class="img-placeholder">Add project image</div>
+        <div class="card-body">
+          <span class="tag">VLMs</span>
+          <h3>Vision-Language Models — Selected Projects</h3>
+          <ul>
+            <li>CLIP, SigLIP, Qwen2.5-VL, Gemma-3, FastVLM, Llama 3.2-Vision for multimodal understanding</li>
+            <li>Image-image and image-text retrieval using CLIP/SigLIP embeddings</li>
+            <li>Fine-tuned VLMs for object detection (GRPO) and Persian book title recognition</li>
+            <li>Multimodal RAG system for scientific articles via FAISS-based retrieval</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <p style="margin-top:18px; font-size:13px; color:var(--text-faint); font-family:'JetBrains Mono',monospace;">
+      // upload your own screenshots to an "images" folder in the repo, then swap each placeholder above for &lt;img src="images/yourfile.jpg" alt="..."&gt;
+    </p>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Research & Industry Experience</h2>
+
+    <div class="exp-item">
+      <div class="item-date">SEP 2024 — PRESENT</div>
+      <div class="item-title">Research Assistant</div>
+      <div class="item-sub">FDI Laboratory, K.N. Toosi University of Technology, Tehran</div>
+      <div class="item-detail">
+        <ul>
+          <li>Active member of the Fault Detection and Identification Laboratory</li>
+          <li>Co-authoring two journal papers (2026)</li>
+          <li>Working with real-world industrial datasets</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="item-date">FEB 2023 — JUL 2026</div>
+      <div class="item-title">Teaching Assistant</div>
+      <div class="item-sub">K.N. Toosi University of Technology</div>
+      <div class="item-detail">
+        <ul>
+          <li>Machine Learning & Principles of Artificial Intelligence (Dr. Aliyari), Feb–Jul 2026</li>
+          <li>Linear Algebra (Dr. Tavakkoli), Feb–Jul 2024</li>
+          <li>Engineering Mathematics (Dr. Tavakkoli), Sep 2023–Feb 2024</li>
+          <li>Numerical Analysis (Dr. Nikoofard), Differential Equations (Dr. Nekoui), Engineering Economics (Dr. Fereidunian), Feb–Jul 2023</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="item-date">JUL 2023 — SEP 2023</div>
+      <div class="item-title">Medical Equipment Intern</div>
+      <div class="item-sub">Imam Khomeini Hospital, Tehran</div>
+      <div class="item-detail">Checked and repaired medical devices and equipment in the largest hospital complex in the Middle East.</div>
+    </div>
+
+    <div class="exp-item">
+      <div class="item-date">JUL 2022 — SEP 2022</div>
+      <div class="item-title">Telecommunication Intern</div>
+      <div class="item-sub">Farariz Ertebat Cooperative Co. (contractor of HUAWEI), Tabriz</div>
+      <div class="item-detail">Wiring and installation of optical fiber and communication cables.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="https://github.com/amirjhn" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/amirjhn" target="_blank">LinkedIn</a>
+      <a href="mailto:amir.jahan.tak.81@gmail.com">Email</a>
+    </div>
+    <div class="copy">© 2026 Amir Jahangard Takaloo</div>
+  </div>
+</footer>
+
+</body>
+</html>
