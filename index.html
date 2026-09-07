@@ -92,10 +92,10 @@
     border-bottom:1px dashed var(--border); color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:10px;
   }
   .card-img-wrap{
-    height:220px; display:flex; align-items:center; justify-content:center;
-    background:#F4F1EC; padding:16px; border-bottom:1px solid var(--border);
+    width:100%; background:#F4F1EC; padding:16px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
-  .card-img{max-width:100%; max-height:100%; object-fit:contain; display:block;}
+  .card-img{width:100%; height:100%; object-fit:contain; display:block;}
   .card-body{padding:20px 22px 0;}
   .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; padding:3px 8px; border-radius:4px; border:1px solid var(--card-accent, var(--freq)); color:var(--card-accent, var(--freq)); margin-bottom:12px;}
   .card h3{font-size:16px; font-weight:600; margin-bottom:8px;}
@@ -251,7 +251,7 @@
     <div class="projects">
 
       <div class="card" style="--card-accent:var(--tf)">
-        <div class="card-img-wrap">
+        <div class="card-img-wrap"> style="aspect-ratio: 0.845;">
           <img src="images/project1.png" alt="Explainable Transfer Learning for Rotating Machinery Fault Diagnosis" class="card-img">
         </div>
         <div class="card-body">
@@ -267,7 +267,7 @@
       </div>
 
       <div class="card" style="--card-accent:var(--time)">
-        <div class="card-img-wrap">
+        <div class="card-img-wrap"> style="aspect-ratio: 1.5;">
           <img src="images/project2.jpg" alt="Accident Prediction & Crash Type Classification for Airbag Optimization" class="card-img">
         </div>
         <div class="card-body">
@@ -281,7 +281,7 @@
       </div>
 
       <div class="card" style="--card-accent:var(--freq)">
-        <div class="card-img-wrap">
+        <div class="card-img-wrap"> style="aspect-ratio: 1.5;">
           <img src="images/project3.png" alt="Large Language Models — Selected Projects" class="card-img">
         </div>
         <div class="card-body">
@@ -297,7 +297,7 @@
       </div>
 
       <div class="card" style="--card-accent:var(--time)">
-        <div class="card-img-wrap">
+        <div class="card-img-wrap"> style="aspect-ratio: 1.5;">
           <img src="images/project4.png" alt="Vision-Language Models — Selected Projects" class="card-img">
         </div>
         <div class="card-body">
